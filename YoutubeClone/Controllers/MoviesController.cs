@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using YoutubeClone.Data;
 using YoutubeClone.Models;
 
@@ -33,7 +35,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            Movie? movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (movie == null)
             {
@@ -73,7 +75,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FindAsync(id);
+            Movie? movie = await _context.Movies.FindAsync(id);
             if (movie == null)
             {
                 return NotFound();
@@ -124,7 +126,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            Movie? movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (movie == null)
             {
@@ -143,7 +145,7 @@ namespace YoutubeClone.Controllers
             {
                 return Problem("Entity set 'MovieDbContext.Movies'  is null.");
             }
-            var movie = await _context.Movies.FindAsync(id);
+            Movie? movie = await _context.Movies.FindAsync(id);
             if (movie != null)
             {
                 _context.Movies.Remove(movie);
@@ -151,6 +153,31 @@ namespace YoutubeClone.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // Streams Video file via API
+        // GET: Movies/StreamVideoFile/5
+        public async Task<IResult> StreamVideoFile(int id)
+        {
+            Movie? movie = await _context.Movies.FirstOrDefaultAsync(m => m.ID == id);
+            if (movie == null)
+            {
+                return (IResult)NotFound();
+            }
+            string filename = movie.FilePath;
+
+            string? basePath = Environment.ProcessPath;
+            if (basePath == null)
+            {
+                throw new Exception("Process path is null!");
+            }
+
+            string fullFilePath = $"{Path.Combine(basePath, "files/")}{filename}";
+
+            FileStream filestream = System.IO.File.OpenRead(fullFilePath);
+
+            return Results.File(filestream, contentType: "video/mp4",
+                fileDownloadName: filename, enableRangeProcessing: true);
         }
 
         private bool MovieExists(int id)

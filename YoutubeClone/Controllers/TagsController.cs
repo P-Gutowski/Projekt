@@ -33,7 +33,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags
+            Tag? tag = await _context.Tags
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (tag == null)
             {
@@ -73,7 +73,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags.FindAsync(id);
+            Tag? tag = await _context.Tags.FindAsync(id);
             if (tag == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags
+            Tag? tag = await _context.Tags
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (tag == null)
             {
@@ -143,7 +143,7 @@ namespace YoutubeClone.Controllers
             {
                 return Problem("Entity set 'MovieDbContext.Tags'  is null.");
             }
-            var tag = await _context.Tags.FindAsync(id);
+            Tag? tag = await _context.Tags.FindAsync(id);
             if (tag != null)
             {
                 _context.Tags.Remove(tag);

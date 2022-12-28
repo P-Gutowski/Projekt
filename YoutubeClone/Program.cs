@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using YoutubeClone.Data;
 using YoutubeClone.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddEntityFrameworkNpgsql();
 builder.Services.AddDbContext<MovieDbContext>(options => options.UseNpgsql(connectionString));
 
@@ -24,7 +24,7 @@ builder.Services.AddAuthentication()
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

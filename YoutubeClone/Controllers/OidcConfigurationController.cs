@@ -20,7 +20,7 @@ namespace YoutubeClone.Controllers
         [HttpGet("_configuration/{clientId}")]
         public IActionResult GetClientRequestParameters([FromRoute] string clientId)
         {
-            var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, clientId);
+            IDictionary<string, string> parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, clientId);
             return Ok(parameters);
         }
     }
