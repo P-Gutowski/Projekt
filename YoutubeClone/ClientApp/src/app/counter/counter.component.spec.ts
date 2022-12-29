@@ -1,34 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { CounterComponent } from './counter.component';
-
-describe('CounterComponent', () => {
-  let fixture: ComponentFixture<CounterComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CounterComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CounterComponent);
-    fixture.detectChanges();
-  });
-
-  it('should display a title', async(() => {
-    const titleText = fixture.nativeElement.querySelector('h1').textContent;
-    expect(titleText).toEqual('Counter');
-  }));
-
-  it('should start with count 0, then increments by 1 when clicked', async(() => {
-    const countElement = fixture.nativeElement.querySelector('strong');
-    expect(countElement.textContent).toEqual('0');
-
-    const incrementButton = fixture.nativeElement.querySelector('button');
-    incrementButton.click();
-    fixture.detectChanges();
-    expect(countElement.textContent).toEqual('1');
-  }));
-});
+@Component({
+  selector: 'app-fetch-data',
+  templateUrl: './counter.component.html'
+})
+export class TestVideoStreamComponent {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    http.get<Blob>(baseUrl + 'movies/streamtestvideofile').subscribe(result => {
+      this.forecasts = result;
+    }, error => console.error(error));
+  }
+  downloadVideoMp4(url: string) {
+    var RequestData = {
+      url: url,
+      type: 0
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'video/mp4',
+      'Accept': 'video/mp4'
+    });
+    return this.http.get<Blob>(this.endpoint + url, { headers: headers, responseType: 'blob' as 'json' });
+  }
+}

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Hosting;
 using YoutubeClone.Data;
 using YoutubeClone.Models;
@@ -157,27 +160,50 @@ namespace YoutubeClone.Controllers
 
         // Streams Video file via API
         // GET: Movies/StreamVideoFile/5
-        public async Task<IResult> StreamVideoFile(int id)
+        public async Task<ActionResult<HttpResponseMessage>> StreamVideoFile(int id)
         {
+            Response.ContentType = new MediaTypeHeaderValue("application/octet-stream").ToString();
+
             Movie? movie = await _context.Movies.FirstOrDefaultAsync(m => m.ID == id);
             if (movie == null)
             {
-                return (IResult)NotFound();
+                return NotFound();
             }
-            string filename = movie.FilePath;
 
-            string? basePath = Environment.ProcessPath;
-            if (basePath == null)
+            string filename = movie.SourceFileName;
+            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string fullFilePath = $"{basePath}{filename}";
+
+            MemoryStream memory = new();
+
+            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                throw new Exception("Process path is null!");
+                await file.CopyToAsync(memory);
             }
 
-            string fullFilePath = $"{Path.Combine(basePath, "files/")}{filename}";
+            memory.Position = 0;
 
-            FileStream filestream = System.IO.File.OpenRead(fullFilePath);
+            return File(memory, "video/mp4", filename);
+        }
 
-            return Results.File(filestream, contentType: "video/mp4",
-                fileDownloadName: filename, enableRangeProcessing: true);
+        // Streams test Video file via API
+        // GET: Movies/StreamTestVideoFile
+        public async Task<ActionResult<HttpResponseMessage>> StreamTestVideoFile()
+        {
+            string filename = "Vines we will never forget";
+            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string fullFilePath = $"{basePath}{filename}";
+
+            MemoryStream memory = new();
+
+            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                await file.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+
+            return File(memory, "video/mp4", filename);
         }
 
         private bool MovieExists(int id)

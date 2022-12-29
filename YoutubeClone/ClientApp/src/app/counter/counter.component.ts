@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-counter-component',
   templateUrl: './counter.component.html'
 })
-export class CounterComponent {
+export class TestVideoStreamComponent {
   public currentCount = 0;
 
   public incrementCounter() {
