@@ -33,7 +33,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var rating = await _context.Ratings
+            Rating? rating = await _context.Ratings
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (rating == null)
             {
@@ -73,7 +73,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var rating = await _context.Ratings.FindAsync(id);
+            Rating? rating = await _context.Ratings.FindAsync(id);
             if (rating == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var rating = await _context.Ratings
+            Rating? rating = await _context.Ratings
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (rating == null)
             {
@@ -143,7 +143,7 @@ namespace YoutubeClone.Controllers
             {
                 return Problem("Entity set 'MovieDbContext.Ratings'  is null.");
             }
-            var rating = await _context.Ratings.FindAsync(id);
+            Rating? rating = await _context.Ratings.FindAsync(id);
             if (rating != null)
             {
                 _context.Ratings.Remove(rating);

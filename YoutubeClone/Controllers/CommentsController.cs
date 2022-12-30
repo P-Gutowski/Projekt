@@ -33,7 +33,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
+            Comment? comment = await _context.Comments
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (comment == null)
             {
@@ -73,7 +73,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments.FindAsync(id);
+            Comment? comment = await _context.Comments.FindAsync(id);
             if (comment == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
+            Comment? comment = await _context.Comments
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (comment == null)
             {
@@ -143,7 +143,7 @@ namespace YoutubeClone.Controllers
             {
                 return Problem("Entity set 'MovieDbContext.Comments'  is null.");
             }
-            var comment = await _context.Comments.FindAsync(id);
+            Comment? comment = await _context.Comments.FindAsync(id);
             if (comment != null)
             {
                 _context.Comments.Remove(comment);

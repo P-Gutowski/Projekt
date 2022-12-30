@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Hosting;
 using YoutubeClone.Data;
 using YoutubeClone.Models;
 
@@ -33,7 +38,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            Movie? movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (movie == null)
             {
@@ -73,7 +78,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FindAsync(id);
+            Movie? movie = await _context.Movies.FindAsync(id);
             if (movie == null)
             {
                 return NotFound();
@@ -124,7 +129,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            Movie? movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (movie == null)
             {
@@ -143,7 +148,7 @@ namespace YoutubeClone.Controllers
             {
                 return Problem("Entity set 'MovieDbContext.Movies'  is null.");
             }
-            var movie = await _context.Movies.FindAsync(id);
+            Movie? movie = await _context.Movies.FindAsync(id);
             if (movie != null)
             {
                 _context.Movies.Remove(movie);
@@ -151,6 +156,54 @@ namespace YoutubeClone.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // Streams Video file via API
+        // GET: Movies/StreamVideoFile/5
+        public async Task<ActionResult<HttpResponseMessage>> StreamVideoFile(int id)
+        {
+            Response.ContentType = new MediaTypeHeaderValue("application/octet-stream").ToString();
+
+            Movie? movie = await _context.Movies.FirstOrDefaultAsync(m => m.ID == id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            string filename = movie.SourceFileName;
+            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string fullFilePath = $"{basePath}{filename}";
+
+            MemoryStream memory = new();
+
+            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                await file.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+
+            return File(memory, "video/mp4", filename);
+        }
+
+        // Streams test Video file via API
+        // GET: Movies/StreamTestVideoFile
+        public async Task<ActionResult<HttpResponseMessage>> StreamTestVideoFile()
+        {
+            string filename = "Vines we will never forget";
+            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string fullFilePath = $"{basePath}{filename}";
+
+            MemoryStream memory = new();
+
+            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                await file.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+
+            return File(memory, "video/mp4", filename);
         }
 
         private bool MovieExists(int id)

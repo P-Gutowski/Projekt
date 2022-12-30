@@ -15,7 +15,7 @@ namespace YoutubeClone.Models
         public ApplicationUser Owner { get; set; }
 
         [Required]
-        public string FilePath { get; set; }
+        public string SourceFileName { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
         public DateTime CreatedAt { get; set; }
