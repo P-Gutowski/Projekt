@@ -91,7 +91,7 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FilePath,CreatedAt,ModifiedAt")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,SourceFileName")] Movie movie)
         {
             if (id != movie.ID)
             {
@@ -176,7 +176,8 @@ namespace YoutubeClone.Controllers
 
             MemoryStream memory = new();
 
-            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open,
+                FileAccess.Read, FileShare.Read))
             {
                 await file.CopyToAsync(memory);
             }
@@ -196,7 +197,8 @@ namespace YoutubeClone.Controllers
 
             MemoryStream memory = new();
 
-            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open,
+                FileAccess.Read, FileShare.Read))
             {
                 await file.CopyToAsync(memory);
             }
@@ -204,6 +206,39 @@ namespace YoutubeClone.Controllers
             memory.Position = 0;
 
             return File(memory, "video/mp4", filename);
+        }
+
+        // POST: Movies/Upload
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile formFile)
+        {
+            long fileSize = formFile.Length;
+            if (fileSize <= 0)
+            {
+                return Ok(new 
+                {
+                    message = "The file has not been saved. Weight 0.",
+                    size = fileSize
+                });
+            }
+
+            string dt = DateTime.Now.ToString("yyyy-MM-dd.HH.mm.ss.fff");
+            string randomSuffix = new Random().NextInt64().ToString();
+            string filename = $"File_{dt}_{randomSuffix}";
+            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string fullFilePath = $"{basePath}{filename}.mp4";
+
+            using (var stream = System.IO.File.Create(fullFilePath))
+            {
+                await formFile.CopyToAsync(stream);
+            }
+
+            return Ok(new 
+            {
+                message = "The file has been saved.",
+                size = fileSize,
+                fileName = filename
+            });
         }
 
         private bool MovieExists(int id)
