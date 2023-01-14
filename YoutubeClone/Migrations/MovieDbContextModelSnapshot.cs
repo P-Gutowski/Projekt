@@ -111,7 +111,6 @@ namespace YoutubeClone.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ID");
@@ -134,14 +133,13 @@ namespace YoutubeClone.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("OwnerId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SourceFileName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -170,7 +168,6 @@ namespace YoutubeClone.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Value")
@@ -226,16 +223,14 @@ namespace YoutubeClone.Migrations
             modelBuilder.Entity("YoutubeClone.Models.Comment", b =>
                 {
                     b.HasOne("YoutubeClone.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YoutubeClone.Models.ApplicationUser", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Movie");
 
@@ -246,9 +241,7 @@ namespace YoutubeClone.Migrations
                 {
                     b.HasOne("YoutubeClone.Models.ApplicationUser", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
@@ -256,20 +249,25 @@ namespace YoutubeClone.Migrations
             modelBuilder.Entity("YoutubeClone.Models.Rating", b =>
                 {
                     b.HasOne("YoutubeClone.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YoutubeClone.Models.ApplicationUser", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Movie");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("YoutubeClone.Models.Movie", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

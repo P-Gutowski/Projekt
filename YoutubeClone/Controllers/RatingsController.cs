@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using YoutubeClone.Data;
 using YoutubeClone.Models;
 
@@ -13,9 +15,11 @@ namespace YoutubeClone.Controllers
     public class RatingsController : Controller
     {
         private readonly MovieDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RatingsController(MovieDbContext context)
+        public RatingsController(UserManager<ApplicationUser> userManager, MovieDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -54,8 +58,14 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Value,CreatedAt,ModifiedAt")] Rating rating)
+        public async Task<IActionResult> Create([Bind("Value")] Rating rating)
         {
+            DateTime now = DateTime.Now;
+            rating.ModifiedAt = now;
+            rating.CreatedAt = now;
+
+            rating.Owner = await _userManager.GetUserAsync(HttpContext.User);
+
             if (ModelState.IsValid)
             {
                 _context.Add(rating);
@@ -86,8 +96,11 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Value,CreatedAt,ModifiedAt")] Rating rating)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Value")] Rating rating)
         {
+            DateTime now = DateTime.Now;
+            rating.ModifiedAt = now;
+            rating.CreatedAt = now;
             if (id != rating.ID)
             {
                 return NotFound();
