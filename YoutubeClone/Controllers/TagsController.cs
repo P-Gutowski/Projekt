@@ -54,8 +54,11 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Content,CreatedAt,ModifiedAt")] Tag tag)
+        public async Task<IActionResult> Create([Bind("Content")] Tag tag)
         {
+            DateTime now = DateTime.Now;
+            tag.ModifiedAt = now;
+            tag.CreatedAt = now;
             if (ModelState.IsValid)
             {
                 _context.Add(tag);
@@ -86,8 +89,11 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Content,CreatedAt,ModifiedAt")] Tag tag)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Content")] Tag tag)
         {
+            DateTime now = DateTime.Now;
+            tag.ModifiedAt = now;
+            tag.CreatedAt = now;
             if (id != tag.ID)
             {
                 return NotFound();

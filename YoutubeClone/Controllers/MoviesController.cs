@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,11 @@ namespace YoutubeClone.Controllers
     public class MoviesController : Controller
     {
         private readonly MovieDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public MoviesController(MovieDbContext context)
+        public MoviesController(UserManager<ApplicationUser> userManager, MovieDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -59,8 +62,14 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FilePath,CreatedAt,ModifiedAt")] Movie movie)
+        public async Task<IActionResult> Create([Bind("FilePath")] Movie movie)
         {
+            DateTime now = DateTime.Now;
+            movie.ModifiedAt = now;
+            movie.CreatedAt = now;
+
+            movie.Owner = await _userManager.GetUserAsync(HttpContext.User);
+
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -93,6 +102,9 @@ namespace YoutubeClone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,SourceFileName")] Movie movie)
         {
+            DateTime now = DateTime.Now;
+            movie.ModifiedAt = now;
+            movie.CreatedAt = now;
             if (id != movie.ID)
             {
                 return NotFound();
