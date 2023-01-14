@@ -1,21 +1,26 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, Inject, Sanitizer } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-test-video-stream-component',
   templateUrl: './test-video-stream.component.html'
 })
 export class TestVideoStreamComponent {
-  public videoFile: Blob = new Blob();
+  fileAddress: SafeUrl = "";
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'video/mp4',
-      'Accept': 'video/mp4'
-    });
+  constructor(private sanitizer: DomSanitizer, http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    const headers = new HttpHeaders();
+    const fileName = "videoFile";
+    http.get(baseUrl + 'movies/streamtestvideofile', {headers, responseType: 'blob' as 'json'}).subscribe(
+        (response: any) => {
+            const dataType = response.type;
+            let binaryData = [];
+            binaryData.push(response);
 
-    http.get<Blob>(baseUrl + 'movies/streamtestvideofile').subscribe(result => {
-        this.videoFile = result;
-      }, error => console.error(error));
+            const url = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+            this.fileAddress = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        }
+    )
   }
 }

@@ -1,6 +1,7 @@
 <h1>Test video stream</h1>
 
-<video *ngIf="videoFile"
-       [src]="videoFile"
+<video *ngIf="fileAddress"
        style="width:300px; height:300px;"
-       controls></video>
+       controls>
+       <source [src]="fileAddress" type="video/mp4">
+</video>
