@@ -22,11 +22,11 @@ namespace YoutubeClone.Controllers
             _userManager = userManager;
             _context = context;
         }
-
+        [HttpGet]
         // GET: Ratings
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Ratings.ToListAsync());
+              return Ok(await _context.Ratings.ToListAsync());
         }
 
         // GET: Ratings/Details/5
@@ -44,13 +44,13 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            return View(rating);
+            return Ok(rating);
         }
 
         // GET: Ratings/Create
         public IActionResult Create()
         {
-            return View();
+            return Ok();
         }
 
         // POST: Ratings/Create
@@ -72,9 +72,9 @@ namespace YoutubeClone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(rating);
+            return Ok(rating);
         }
-
+        [HttpGet]
         // GET: Ratings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -88,13 +88,13 @@ namespace YoutubeClone.Controllers
             {
                 return NotFound();
             }
-            return View(rating);
+            return Ok(rating);
         }
 
         // POST: Ratings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Value")] Rating rating)
         {
@@ -126,7 +126,7 @@ namespace YoutubeClone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(rating);
+            return Ok(rating);
         }
 
         // GET: Ratings/Delete/5
@@ -143,8 +143,9 @@ namespace YoutubeClone.Controllers
             {
                 return NotFound();
             }
-
-            return View(rating);
+            _context.Ratings.Remove(rating);
+            await _context.SaveChangesAsync();
+            return Ok(rating);
         }
 
         // POST: Ratings/Delete/5

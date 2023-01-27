@@ -30,7 +30,7 @@ namespace YoutubeClone.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Movies.ToListAsync());
+              return Ok(await _context.Movies.ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -48,7 +48,7 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            return View(movie);
+            return Ok(movie);
         }
 
         // GET: Movies/Create
@@ -62,7 +62,7 @@ namespace YoutubeClone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FilePath")] Movie movie)
+        public async Task<IActionResult> Create([Bind("SourceFileName")] Movie movie)
         {
             DateTime now = DateTime.Now;
             movie.ModifiedAt = now;
@@ -76,7 +76,7 @@ namespace YoutubeClone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return Ok(movie);
         }
 
         // GET: Movies/Edit/5
@@ -92,7 +92,7 @@ namespace YoutubeClone.Controllers
             {
                 return NotFound();
             }
-            return View(movie);
+            return Ok(movie);
         }
 
         // POST: Movies/Edit/5
@@ -147,8 +147,9 @@ namespace YoutubeClone.Controllers
             {
                 return NotFound();
             }
-
-            return View(movie);
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
+            return Ok(movie);
         }
 
         // POST: Movies/Delete/5
@@ -203,8 +204,8 @@ namespace YoutubeClone.Controllers
         // GET: Movies/StreamTestVideoFile
         public async Task<ActionResult<HttpResponseMessage>> StreamTestVideoFile()
         {
-            string filename = "Vines we will never forget";
-            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string filename = "Me at the zoo";
+            string basePath = @"/Users/piotrek/Downloads/";
             string fullFilePath = $"{basePath}{filename}";
 
             MemoryStream memory = new();

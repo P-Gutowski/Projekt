@@ -1,0 +1,17 @@
+<div class = "container my-5">
+    <h1 class="mb-3">Edit Movie</h1>
+
+    <form #form="ngForm" (ngSubmit)="EditTagMethod()">
+        <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="number" class="form-control" id="id" [(ngModel)]="edit_tag.id" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <input class="form-control" type="text" id="content" [(ngModel)]="edit_tag.content" [ngModelOptions]="{standalone: true}">
+        </div>
+      <button type="submit" class="btn btn-primary">Confirm</button>
+      <button type="button" class="btn btn-danger" (click)="DeleteTagMethod(edit_tag.id)">Delete</button>
+    </form>
+</div>
+   

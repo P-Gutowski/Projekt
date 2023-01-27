@@ -1,0 +1,21 @@
+
+    <h1 class="mb-3">Ratings</h1>
+    <table class="table" *ngIf="Ratings">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Owner</td>
+                <td>Movie</td>
+                <td>Value</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let rating of Ratings'>
+                <td>{{ rating.id}}</td>
+                <td>{{ rating.owner}}</td>
+                <td>{{ rating.movie}}</td>
+                <td>{{ rating.value}}</td>
+                <td><a [routerLink]="['rating-edit', rating.id]">View</a></td>
+            </tr>
+        </tbody>
+    </table>

@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@angular/forms": "^15.1.0",
+    "@angular/platform-browser": "^15.1.0",
     "@nguniversal/module-map-ngfactory-loader": "^8.2.6"
   }
 }

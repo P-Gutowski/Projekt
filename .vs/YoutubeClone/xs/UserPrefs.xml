@@ -1,0 +1,82 @@
+﻿<Properties StartupConfiguration="{2868D23F-8E60-4E76-890E-71B31C12F380}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="YoutubeClone/Models/Tag.cs">
+    <Files>
+      <File FileName="YoutubeClone/ClientApp/src/app/home/home.component.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/home/home.component.html" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/services/movie-list.service.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Models/Tag.cs" Line="12" Column="19" />
+      <File FileName="YoutubeClone/Models/Movie.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Models/Rating.cs" Line="17" Column="6" />
+      <File FileName="YoutubeClone/Models/Comment.cs" Line="8" Column="9" />
+      <File FileName="YoutubeClone/ClientApp/src/app/movie-list/movie-list.component.css" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/movie-list/movie-list.component.html" Line="24" Column="37" />
+      <File FileName="YoutubeClone/ClientApp/src/app/movie-list/movie-list.component.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/models/Movie.model.ts" Line="4" Column="16" />
+      <File FileName="YoutubeClone/ClientApp/src/app/edit-movie/edit-movie.component.html" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/edit-movie/edit-movie.component.css" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/models/Rating.model.ts" Line="7" Column="17" />
+      <File FileName="YoutubeClone/ClientApp/src/app/models/MovieAdd.model.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/models/Tag.model.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/models/ApplicationUser.model.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/models/Comment.model.ts" Line="12" Column="1" />
+      <File FileName="YoutubeClone/Models/BaseAbstract.cs" Line="9" Column="1" />
+      <File FileName="YoutubeClone/Models/ApplicationUser.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/ClientApp/src/app/edit-movie/edit-movie.component.ts" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Migrations/MovieDbContextModelSnapshot.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Data/ApplicationDbContext.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Data/MovieDbContext.cs" Line="12" Column="25" />
+      <File FileName="YoutubeClone/Views/Tags/Index.cshtml" Line="26" Column="18" />
+      <File FileName="YoutubeClone/Data/Migrations/ApplicationDbContextModelSnapshot.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Controllers/TagsController.cs" Line="64" Column="17" />
+      <File FileName="YoutubeClone/Controllers/RatingsController.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Controllers/MoviesController.cs" Line="76" Column="31" />
+      <File FileName="YoutubeClone/Controllers/OidcConfigurationController.cs" Line="1" Column="1" />
+      <File FileName="YoutubeClone/Views/Movies/Create.cshtml" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="YoutubeClone" expanded="True">
+            <Node name="YoutubeClone" expanded="True">
+              <Node name="ClientApp" expanded="True">
+                <Node name="src" expanded="True">
+                  <Node name="app" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="Migrations" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Tag.cs" selected="True" />
+              </Node>
+              <Node name="Pages" expanded="True">
+                <Node name="Shared" expanded="True" />
+              </Node>
+              <Node name="Properties" expanded="True">
+                <Node name="serviceDependencies.json" expanded="True" />
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Movies" expanded="True" />
+                <Node name="Ratings" expanded="True" />
+                <Node name="Shared" expanded="True" />
+                <Node name="Tags" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.YoutubeClone PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>

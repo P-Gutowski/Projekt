@@ -1,0 +1,28 @@
+
+    <h1 class="mb-3">Movies</h1>
+    <table class="table" *ngIf="Movies">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Owner</td>
+                <td>Tags</td>
+                <td>SourceFileName</td>
+                <td>CreatedAt</td>
+                <td>ModifiedAt</td>
+                <td>Ratings</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let movie of Movies'>
+                <td>{{ movie.id}}</td>
+                <td>{{ movie.owner}}</td>
+                <td>{{ movie.tags}}</td>
+                <td>{{ movie.sourceFileName}}</td>
+                <td>{{ movie.createdAt}}</td>
+                <td>{{ movie.modifiedAt}}</td>
+                <td>{{ movie.ratings}}</td>
+                <td><a [routerLink]="['movie-edit', movie.id]">View</a></td>
+            </tr>
+        </tbody>
+    </table>

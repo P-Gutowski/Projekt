@@ -1,0 +1,13 @@
+<div class = "container my-5">
+    <h1 class="mb-3">Add New Tag</h1>
+
+    <form #form="ngForm" (ngSubmit)="ratingAddMethod()">
+
+      <div class="mb-3">
+        <label for="content" class="form-label">Add Value:  </label>
+        <input class="format-control" type="text" name="value" [(ngModel)]="addrating.value" [ngModelOptions]="{standalone: true}">
+      </div>
+
+      <button type="submit">Confirm</button>
+    </form>
+</div>

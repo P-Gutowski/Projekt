@@ -22,7 +22,7 @@ namespace YoutubeClone.Controllers
         // GET: Tags
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Tags.ToListAsync());
+              return Ok(await _context.Tags.ToListAsync());
         }
 
         // GET: Tags/Details/5
@@ -40,19 +40,19 @@ namespace YoutubeClone.Controllers
                 return NotFound();
             }
 
-            return View(tag);
+            return Ok(tag);
         }
 
         // GET: Tags/Create
         public IActionResult Create()
         {
-            return View();
+            return Ok();
         }
 
         // POST: Tags/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Content")] Tag tag)
         {
@@ -65,7 +65,7 @@ namespace YoutubeClone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            return Ok(tag);
         }
 
         // GET: Tags/Edit/5
@@ -81,13 +81,13 @@ namespace YoutubeClone.Controllers
             {
                 return NotFound();
             }
-            return View(tag);
+            return Ok(tag);
         }
 
         // POST: Tags/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Content")] Tag tag)
         {
@@ -119,7 +119,7 @@ namespace YoutubeClone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            return Ok(tag);
         }
 
         // GET: Tags/Delete/5
@@ -136,8 +136,9 @@ namespace YoutubeClone.Controllers
             {
                 return NotFound();
             }
-
-            return View(tag);
+            _context.Tags.Remove(tag);
+            await _context.SaveChangesAsync();
+            return Ok(tag);
         }
 
         // POST: Tags/Delete/5
