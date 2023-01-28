@@ -22,6 +22,9 @@ import { RatingListComponent } from './rating-list/rating-list.component';
 import { RatingAddComponent } from './rating-add/rating-add.component';
 import { RatingEditComponent } from './rating-edit/rating-edit.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { CommonModule } from '@angular/common';
+
+
 
 @NgModule({
   declarations: [
@@ -43,14 +46,15 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    CommonModule,
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'test-video-stream', component: TestVideoStreamComponent },
+      { path: 'movie-list/movie-details/:id', component: TestVideoStreamComponent },
       { path: 'movie-list', component: MovieListComponent},
       { path: 'movie-add', component: MovieAddComponent},
-      { path: 'movie-details/:id', component: MovieDetailsComponent},
+      { path: 'movie-list/movie-details/:id', component: MovieDetailsComponent},
       { path: 'movie-list/movie-edit/:id', component: EditMovieComponent},
       { path: 'tag-list', component: TagListComponent},
       { path: 'tag-add', component: TagAddComponent},

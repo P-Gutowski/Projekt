@@ -12,8 +12,8 @@
         <tbody>
             <tr *ngFor='let rating of Ratings'>
                 <td>{{ rating.id}}</td>
-                <td>{{ rating.owner}}</td>
-                <td>{{ rating.movie}}</td>
+                <td>{{ rating.ownerid}}</td>
+                <td>{{ rating.movieid}}</td>
                 <td>{{ rating.value}}</td>
                 <td><a [routerLink]="['rating-edit', rating.id]">View</a></td>
             </tr>

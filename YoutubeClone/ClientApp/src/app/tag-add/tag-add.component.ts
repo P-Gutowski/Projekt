@@ -11,7 +11,7 @@ import { TagServiceService } from '../services/tag-service.service';
 })
 export class TagAddComponent implements OnInit {
   addtag: TagAdd = {
-    content: ''
+    Content: ''
   }
   constructor(private tagaddservice: TagServiceService, private router: Router) { }
   

@@ -21,7 +21,7 @@ export class RatingEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe({
       next: (params) => {
-        const id = params.get('id');
+        const id  = params.get('id');
         if (id) {
           this.ratingServicee.GetRating(id)
           .subscribe({
@@ -35,7 +35,7 @@ export class RatingEditComponent implements OnInit {
   }
 
   EditRatingMethod() {
-  this.ratingServicee.Edit(this.edit_rating.id, this.edit_rating)
+  this.ratingServicee.Edit(this.edit_rating.id, this.edit_rating.value)
   .subscribe({
     next: (response) => {
       this.router.navigate(['rating-list'])

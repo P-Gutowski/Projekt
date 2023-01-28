@@ -25,7 +25,7 @@ export class EditMovieComponent implements OnInit {
       next: (params) => {
         const id = params.get('id');
         if (id) {
-          this.movieService.GetMovie(this.editMovie.id)
+          this.movieService.GetMovie(id)
           .subscribe({
             next: (response) => {
               this.editMovie = response;

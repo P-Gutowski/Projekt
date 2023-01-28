@@ -25,6 +25,7 @@ const PROXY_CONFIG = [
       "/Ratings/Details/:id",
       "/Ratings/Create",
       "/Ratings/Edit/:id",
+      "/Ratings/DetailsMovie/:id"
    ],
     target: target,
     secure: false,

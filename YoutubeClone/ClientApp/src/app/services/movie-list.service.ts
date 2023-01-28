@@ -23,7 +23,7 @@ export class MovieListService {
   Create(addMovie: MovieAdd): Observable<MovieAdd>{
     return this.http.post<MovieAdd>(this.baseApiUrl + 'Movies/Create', addMovie)
   }
-  GetMovie(id: number): Observable<Movie>{
+  GetMovie(id: string): Observable<Movie>{
     return this.http.get<Movie>(this.baseApiUrl + 'Movies/Details/' + id);
   }
   Edit(id: number, updateMovieMethod: Movie): Observable<Movie> {

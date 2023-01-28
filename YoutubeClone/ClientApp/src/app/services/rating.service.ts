@@ -16,6 +16,9 @@ export class RatingService {
   GetRating(id: string): Observable<Rating>{
     return this.http.get<Rating>(this.baseApiUrl + 'Ratings/Details/' + id);
   }
+  GetRatingMovie(id: string): Observable<RatingEdit>{
+    return this.http.get<RatingEdit>(this.baseApiUrl + 'Ratings/DetailsMovie/' + id);
+  }
   
   Index(): Observable<Rating[]>{
     console.log(this.baseApiUrl)
@@ -24,7 +27,7 @@ export class RatingService {
   Create(ratingAdd: RatingAdd): Observable<RatingAdd>{
     return this.http.post<RatingAdd>(this.baseApiUrl + 'Ratings/Create', ratingAdd)
   }
-  Edit(id: number, updateRatingMethod: RatingEdit): Observable<RatingEdit> {
+  Edit(id: number, updateRatingMethod: RatingEdit["value"]): Observable<RatingEdit> {
     return this.http.put<RatingEdit>(this.baseApiUrl + 'Ratings/Edit/' + id, updateRatingMethod)
   }
   Delete(id: number) {

@@ -52,8 +52,7 @@ namespace YoutubeClone.Controllers
         // POST: Tags/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPut]
-        [ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> Create([Bind("Content")] Tag tag)
         {
             DateTime now = DateTime.Now;

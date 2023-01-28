@@ -1,3 +1,3 @@
 export interface TagAdd{
-    content: string;
+    Content: string;
 }

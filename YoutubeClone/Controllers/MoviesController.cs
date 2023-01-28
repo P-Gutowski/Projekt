@@ -61,7 +61,6 @@ namespace YoutubeClone.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SourceFileName")] Movie movie)
         {
             DateTime now = DateTime.Now;
@@ -184,7 +183,7 @@ namespace YoutubeClone.Controllers
             }
 
             string filename = movie.SourceFileName;
-            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string basePath = @"/Users/piotrek/Downloads/";
             string fullFilePath = $"{basePath}{filename}";
 
             MemoryStream memory = new();
@@ -204,10 +203,10 @@ namespace YoutubeClone.Controllers
         // GET: Movies/StreamTestVideoFile
         public async Task<ActionResult<HttpResponseMessage>> StreamTestVideoFile()
         {
-            string filename = "Me at the zoo";
-            string basePath = @"/Users/piotrek/Downloads/";
+            string filename = "projektt";
+            string basePath = @"/Users/piotrek/Documents/Filmiki/";
             string fullFilePath = $"{basePath}{filename}";
-
+            
             MemoryStream memory = new();
 
             using (FileStream file = new(fullFilePath + ".mp4", FileMode.Open,
@@ -238,7 +237,7 @@ namespace YoutubeClone.Controllers
             string dt = DateTime.Now.ToString("yyyy-MM-dd.HH.mm.ss.fff");
             string randomSuffix = new Random().NextInt64().ToString();
             string filename = $"File_{dt}_{randomSuffix}";
-            string basePath = @"C:\temp\YoutubeCloneVideos\";
+            string basePath = @"/Users/piotrek/Downloads/";
             string fullFilePath = $"{basePath}{filename}.mp4";
 
             using (var stream = System.IO.File.Create(fullFilePath))

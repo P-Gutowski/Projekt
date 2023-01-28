@@ -46,6 +46,22 @@ namespace YoutubeClone.Controllers
 
             return Ok(rating);
         }
+        public async Task<IActionResult> DetailsMovie(int? id)
+        {
+            if (id == null || _context.Ratings == null)
+            {
+                return NotFound();
+            }
+
+            Rating? rating = await _context.Ratings
+                .FirstOrDefaultAsync(m => m.Movie.ID == id);
+            if (rating == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(rating.Value);
+        }
 
         // GET: Ratings/Create
         public IActionResult Create()
@@ -57,7 +73,6 @@ namespace YoutubeClone.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Value")] Rating rating)
         {
             DateTime now = DateTime.Now;
@@ -95,7 +110,6 @@ namespace YoutubeClone.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPut]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Value")] Rating rating)
         {
             DateTime now = DateTime.Now;

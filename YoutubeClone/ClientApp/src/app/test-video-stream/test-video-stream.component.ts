@@ -22,5 +22,6 @@ export class TestVideoStreamComponent {
             this.fileAddress = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         }
     )
+    
   }
 }
